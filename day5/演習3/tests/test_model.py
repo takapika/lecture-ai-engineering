@@ -173,7 +173,7 @@ def test_model_reproducibility(sample_data, preprocessor):
     ), "モデルの予測結果に再現性がありません"
 
 
-#-- 課題のため追加したコード --
+# -- 課題のため追加したコード --
 def test_model_improved_accuracy(train_model):
     model, X_test, y_test = train_model
     y_pred = model.predict(X_test)
@@ -188,6 +188,6 @@ def test_model_improved_accuracy(train_model):
         baseline_accuracy = float(f.read().strip())
 
     # 精度が向上しているかチェック
-    assert current_accuracy >= baseline_accuracy, (
-        f"精度が改善されていません（前回: {baseline_accuracy:.3f}, 今回: {current_accuracy:.3f}）"
-    )
+    assert (
+        current_accuracy >= baseline_accuracy
+    ), f"精度が改善されていません（前回: {baseline_accuracy:.3f}, 今回: {current_accuracy:.3f}）"
