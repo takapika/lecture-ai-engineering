@@ -171,3 +171,23 @@ def test_model_reproducibility(sample_data, preprocessor):
     assert np.array_equal(
         predictions1, predictions2
     ), "モデルの予測結果に再現性がありません"
+
+
+# -- 課題のため追加したコード --
+def test_model_improved_accuracy(train_model):
+    model, X_test, y_test = train_model
+    y_pred = model.predict(X_test)
+    current_accuracy = accuracy_score(y_test, y_pred)
+
+    # 前回の精度を読み込む
+    baseline_file = os.path.join(MODEL_DIR, "baseline_accuracy.txt")
+    if not os.path.exists(baseline_file):
+        pytest.skip("ベースライン精度ファイルが存在しません")
+
+    with open(baseline_file, "r") as f:
+        baseline_accuracy = float(f.read().strip())
+
+    # 精度が向上しているかチェック
+    assert (
+        current_accuracy >= baseline_accuracy
+    ), f"精度が改善されていません（前回: {baseline_accuracy:.3f}, 今回: {current_accuracy:.3f}）"
